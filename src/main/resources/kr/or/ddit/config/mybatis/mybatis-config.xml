@@ -7,6 +7,7 @@
 	<typeAliases>
 		<typeAlias type="kr.or.ddit.member.vo.MemberVo" alias="memberVo"/>
 		<typeAlias type="kr.or.ddit.common.page.PageVo" alias="pageVo"/>
+		<typeAlias type="kr.or.ddit.common.page.ConditionVo" alias="conditionVo"/>
 	</typeAliases>
 
   <environments default="development">

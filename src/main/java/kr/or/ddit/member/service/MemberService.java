@@ -1,12 +1,10 @@
 package kr.or.ddit.member.service;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.common.page.ConditionVo;
 import kr.or.ddit.common.page.PageVo;
 import kr.or.ddit.member.repository.IMemberDao;
 import kr.or.ddit.member.repository.MemberDao;
@@ -47,5 +45,102 @@ public class MemberService implements IMemberService{
 		return map;
 
 	}
+
+	@Override
+	public int registMember(MemberVo memVo) {
+		
+		try {
+			return memberdao.registMember(memVo);
+			
+		}catch(Exception e) {
+			return 0;
+		}
+		
+	}
+
+	@Override
+	public int modifyMember(MemberVo memVo) {
+		
+		try {
+			return memberdao.modifyMember(memVo);
+		}catch(Exception e) {
+			return 0;
+		}
+		
+	}
+
+	@Override
+	public int deleteMember(String userid) {
+		try {
+			return memberdao.deleteMember(userid);
+			
+		}catch(Exception e) {
+			return 0;
+		}
+	}
+
+	@Override
+	public Map<String, Object> getConditionMemberbyid(ConditionVo conVo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		int idCnt = 0;
+		
+		List<MemberVo> pagingList = memberdao.getConditionMemberbyid(conVo);
+		
+		idCnt = memberdao.getCntMemberbyid(conVo.getContents());
+
+		map.put("pagingList", pagingList);
+		map.put("memCnt", idCnt);
+		
+		return map;
+	}
+
+	@Override
+	public int getCntMemberbyid(String userid) {
+		
+		return memberdao.getCntMemberbyid(userid);
+	}
+
+	@Override
+	public Map<String, Object> getConditionMemberbyali(ConditionVo conVo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+	
+		
+		List<MemberVo> pagingList = memberdao.getConditionMemberbyali(conVo);
+		int alCnt = memberdao.getCntMemberbyali(conVo.getContents());
+
+		map.put("pagingList", pagingList);
+		map.put("memCnt", alCnt);
+		
+		return map;
+	}
+
+	@Override
+	public int getCntMemberbyali(String alias) {
+		
+		return memberdao.getCntMemberbyali(alias);
+	}
+
+	@Override
+	public Map<String, Object> getConditionMemberbynm(ConditionVo conVo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+	
+		
+		List<MemberVo> pagingList = memberdao.getConditionMemberbynm(conVo);
+		int nmCnt = memberdao.getCntMemberbynm(conVo.getContents());
+
+		map.put("pagingList", pagingList);
+		map.put("memCnt", nmCnt);
+		
+		return map;
+	}
+
+	@Override
+	public int getCntMemberbynm(String usernm) {
+		
+		return memberdao.getCntMemberbynm(usernm);
+	}
+
+
 
 }

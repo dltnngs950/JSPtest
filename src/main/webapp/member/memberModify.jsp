@@ -13,7 +13,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-<title>회원 등록</title>
+<title>회원 상세</title>
 <!-- Font Awesome Icons -->
 <link rel="stylesheet" href="${cp }/resources/bootstrap/plugins/fontawesome-free/css/all.min.css">
 <!-- Theme style -->
@@ -65,16 +65,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		})
 		
 		
-	$('#cancelBtn').on('click', function() {
-			$('#id').val("")
-			$('#pass').val("")
-			$('#name').val("")
-			$('#alise').val("")
-			$('#addr1').val("")
-			$('#addr2').val("")
-			$('#zipcode').val("")
-			$('#picture').val("")
-			$('#pictureViewImg').val("");  
+	$('#registBtn').on('click', function() {
+
 		})
 
 	})
@@ -89,7 +81,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 			<ul class="navbar-nav">
 				<li class="nav-item"><a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a></li>
 				<li class="nav-item d-none d-sm-inline-block"><a href="#" class="nav-link">HOME</a></li>
-				<li class="nav-item d-none d-sm-inline-block"><a href="#;" class="nav-link">회원관리</a></li>
+				<li class="nav-item d-none d-sm-inline-block"><a href="#;" class="nav-link">회원 상세</a></li>
 			</ul>
 
 			<!-- SEARCH FORM -->
@@ -225,17 +217,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 				<section class="content register-page" style="height:100%;">
 					<div class="container-fluid">
 						<div class="login-logo">
-							<b>회원 등록</b>
+							<b>회원 수정</b>
 						</div>
 						<!-- form start -->
 						<div class="card">
 							<div class="register-card-body">
-								<form role="form" class="form-horizontal" action="${cp }/registMember" method="post" encType="multipart/form-data">
+								<form role="form" class="form-horizontal" action="${cp }/memberModify" method="post" encType="multipart/form-data">
 								<input type="hidden" name="mememid" value="${vo.userid }" />
 									<div class="input-group mb-3">
 										<div class="mailbox-attachments clearfix" style="text-align: center; width:100%;">
 											<div class="mailbox-attachment-icon has-img" id="pictureView" style="border: 1px solid green; height: 200px; width: 140px; margin: 0 auto;">
-												<img id="pictureViewImg" style="width:100%; height:100%;"/>
+												<img src="${cp }/profile/${member.userid}.png" id="pictureViewImg" style="width:100%; height:100%;"/>
 											</div>
 											<div class="mailbox-attachment-info">
 												<div class="input-group input-group-sm">
@@ -249,18 +241,18 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									
 									<div class="form-group row">
 										<label for="id" class="col-sm-3" style="font-size: 0.9em;">
-											<span style="color: red; font-weight: bold;">*</span>아이디
+											<span style="color: red; font-weight: bold;"></span>아이디
 										</label>
 										<div class="col-sm-9 input-group-sm">
-											<input name="userid" type="text" class="form-control" id="id" placeholder="회원 id" required/>
+											<input name="userid" type="text" class="form-control" id="id" value="${member.userid }" readonly/>
 										</div>
 									</div>
-									
+											
 									<div class="form-group row">
 										<label for="pwd" class="col-sm-3" style="font-size: 0.9em;">
 											<span style="color: red; font-weight: bold;">*</span>패스워드</label>
 										<div class="col-sm-9 input-group-sm">
-											<input class="form-control" name="pass" type="password" class="form-control" id="pass" placeholder="비밀번호" required/>
+											<input class="form-control" name="pass" type="text" class="form-control" id="pass" placeholder="비밀번호" required/>
 										</div>
 									</div>
 									
@@ -282,7 +274,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									<div class="form-group row">
 										<label for="addr1" class="col-sm-3 control-label">주소</label>
 										<div class="col-sm-3 input-group-sm">
-											<input name="addr1" type="text" class="form-control" id="addr1" placeholder="주소" readonly>
+											<input name="addr1" type="text" class="form-control" id="addr1" placeholder="거리주소" readonly>
 										</div>
 										<div class="col-sm-3 input-group-sm">
 											<input name="addr2" type="text" class="form-control" id="addr2" placeholder="상세주소">	
@@ -301,11 +293,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 									<div class="card-footer">
 										<div class="row">
 											<div class="col-sm-6">
-												<button type="submit" id="registBtn" class="btn btn-info">등록</button>
+												<button type="submit" id="registBtn" class="btn btn-info">수정</button>
 											</div>
-
+											
 											<div class="col-sm-6">
-												<button type="button" id="cancelBtn" class="btn btn-default float-right">&nbsp;&nbsp;&nbsp;취 &nbsp;&nbsp;소&nbsp;&nbsp;&nbsp;</button>
+												<button type="button" id="cancelBtn" class="btn btn-default float-right" OnClick="location.href='${cp}/memberDetail?userid=${member.userid}'">&nbsp;&nbsp;&nbsp;취 &nbsp;&nbsp;소&nbsp;&nbsp;&nbsp;</button>
 											</div>
 
 										</div>

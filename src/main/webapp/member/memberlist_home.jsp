@@ -32,28 +32,26 @@
 <script>
 $(function(){
 	
-		
 	$('#searchBtn').on('click', function(){
-		
 		var perPageNum = $('#perPageNum').val();
 		var searchType = $('#searchType').val();
-		var keyword = $('#word1').val();
+		var keyword = $('#word').val();
 		
 		console.log(keyword)
-		console.log(searchType)
-		console.log(perPageNum)
 		
 		$("#perPage").val(perPageNum);
 		$("#Type").val(searchType);
-		$("#search").val(keyword);
-			
+		$("#search").val("%"+keyword+"%");
+		
+		console.log($("#search").val("%"+keyword+"%"))
+		
 		$("#frm3").attr("action", "${cp }/pagingMember.do");
 		
 		$("#frm3").submit();
 
 	})
-		
-	$("#perPageNum").val("${pageSize}");
+	
+	$("#perPageNum").val("${page}");
 	$("#searchType").val("${type}");
 	
 })
@@ -240,7 +238,7 @@ $(function(){
 										<option value="id">아이디</option>
 										<option value="nm">이름</option>
 										<option value="al">별명</option>
-									</select> <input class="form-control" type="text" name="keyword1" id="word1" placeholder="검색어를 입력하세요."> <span class="input-group-append">
+									</select> <input class="form-control" type="text" name="keyword" id="word" placeholder="검색어를 입력하세요."> <span class="input-group-append">
 										<button class="btn btn-primary" type="button" id="searchBtn" data-card-widget="search">
 											<i class="fa fa-fw fa-search"></i>
 										</button>
@@ -285,12 +283,12 @@ $(function(){
 						<div class="card-footer">
 							<nav aria-label="member list Navigation">	
 						<ul class="pagination justify-content-center m-0">
-							<li class="page-item"><a class="page-link" href="${cp }/pagingMember.do?page=1&pageSize=${pageVo.pageSize }&type=${type}&search=${contents}">
+							<li class="page-item"><a class="page-link" href="${cp }/pagingMember.do?page=1&pageSize=${pageVo.pageSize }">
 								<i class="fas fa-angle-double-left"></i></a></li>
 								
 								<c:choose>
 									<c:when test="${pageVo.page > 1}">
-										<li class="page-item"><a class="page-link" href="${cp }/pagingMember.do?page=${pageVo.page - 1 }&pageSize=${pageVo.pageSize }&type=${type}&search=${contents}"><i class="fas fa-angle-left"></i></a></li>
+										<li class="page-item"><a class="page-link" href="${cp }/pagingMember.do?page=${pageVo.page - 1 }&pageSize=${pageVo.pageSize }"><i class="fas fa-angle-left"></i></a></li>
 									</c:when>
 									<c:otherwise>
 									<li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-left"></i></a></li>
@@ -302,20 +300,20 @@ $(function(){
 										<li class="page-item active"><a class="page-link" href="#">${i }</a></li>
 								</c:when>	
 								<c:otherwise>
-										<li class=""><a class="page-link" href="${cp }/pagingMember.do?page=${i }&pageSize=${pageVo.pageSize}&type=${type}&search=${contents}">
+										<li class=""><a class="page-link" href="${cp }/pagingMember.do?page=${i }&pageSize=${pageVo.pageSize}">
 										${i }</a></li>
 								</c:otherwise>
 									</c:choose>
 								</c:forEach>	
 								<c:choose>
 									<c:when test="${pageVo.page < pagination}">
-									<li class="page-item"><a class="page-link" href="${cp }/pagingMember.do?page=${pageVo.page + 1 }&pageSize=${pageVo.pageSize }&type=${type}&search=${contents}"><i class="fas fa-angle-right"></i></a></li>	
+									<li class="page-item"><a class="page-link" href="${cp }/pagingMember.do?page=${pageVo.page + 1 }&pageSize=${pageVo.pageSize }"><i class="fas fa-angle-right"></i></a></li>	
 									</c:when>
 									<c:otherwise>
 									<li class="page-item"><a class="page-link" href="#"><i class="fas fa-angle-right"></i></a></li>
 									</c:otherwise>
 								</c:choose>
-									<li class="page-item"><a class="page-link" href="${cp }/pagingMember.do?page=${pagination }&pageSize=${pageVo.pageSize }&type=${type}&search=${contents}">
+									<li class="page-item"><a class="page-link" href="${cp }/pagingMember.do?page=${pagination }&pageSize=${pageVo.pageSize }">
 									<i class="fas fa-angle-double-right"></i></a></li>
 									
 								</ul>

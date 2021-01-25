@@ -29,38 +29,100 @@
   	FROM users
   </select>
   
-<!--    사용자 정보 수정 --> 
-<!--   <update id="modifyUser" parameterType="userVo"> -->
-<!--  	UPDATE users SET usernm = #{usernm},  -->
-<!--  				pass = #{pass}, -->
-<!--                 reg_dt = SYSDATE, -->
-<!--                 alias = #{alias}, -->
-<!--                 addr1 = #{addr1}, -->
-<!--                 addr2 = #{addr2},   -->
-<!--                 zipcode = #{zipcode}, -->
-<!--                 filename = #{filename}, -->
-<!--                 realfilename = #{realfilename}      -->
-<!--         WHERE userid = #{userid} -->
-<!--   </update> -->
   
-<!--   <insert id="registUser" parameterType="userVo"> -->
-<!--   	INSERT INTO users (userid, usernm, pass, reg_dt, alias, addr1, addr2, zipcode, filename, realfilename)  -->
-<!--   	VALUES ( -->
-<!--   		#{userid}, -->
-<!--   		#{usernm},  -->
-<!--  		#{pass}, -->
-<!--     	SYSDATE, -->
-<!--     	#{alias}, -->
-<!--    		#{addr1}, -->
-<!--    		#{addr2},   -->
-<!--     	#{zipcode}, -->
-<!--     	#{filename}, -->
-<!--     	#{realfilename} -->
-<!--   	) -->
-<!--   </insert> -->
+
+	<insert id="registMember" parameterType="memberVo">
+  		INSERT INTO users (userid, usernm, pass, reg_dt, alias, addr1, addr2, zipcode, filename, realfilename) 
+  		VALUES (
+  			#{userid},
+  			#{usernm}, 
+ 			#{pass},
+    		SYSDATE,
+    		#{alias},
+   			#{addr1},
+   			#{addr2},  
+    		#{zipcode},
+	    	#{filename},
+	    	#{realfilename}
+  		)
+ 	</insert>
+ 
+  <update id="modifyMember" parameterType="memberVo">
+ 	UPDATE users SET usernm = #{usernm}, 
+ 				pass = #{pass},
+                alias = #{alias},
+                addr1 = #{addr1},
+                addr2 = #{addr2},  
+                zipcode = #{zipcode},
+                filename = #{filename},
+                realfilename = #{realfilename}     
+        WHERE userid = #{userid}
+  </update>
+
   
-<!--   <delete id="deleteUser" parameterType="String"> -->
-<!--   	DELETE users WHERE userid = #{value} -->
-<!--   </delete> -->
+  <delete id="deleteMember" parameterType="String">
+  	DELETE users WHERE userid = #{value}
+  </delete>
+  
+  <!-- 고통의시작 ============================ -->
+  
+  <select id="getConditionMemberbyid" resultType="memberVo" parameterType="conditionVo">
+  SELECT *
+  FROM
+    (SELECT ROWNUM rn, a.*
+    FROM 
+        (SELECT * 
+         FROM users
+         WHERE userid LIKE #{contents}
+         ORDER BY userid) a    
+    WHERE ROWNUM &lt;= #{page} * #{pageSize})
+WHERE rn BETWEEN (#{page}-1) * #{pageSize} + 1 AND #{page} * #{pageSize}
+  
+  </select>
+  
+   <select id="getConditionMemberbyali" resultType="memberVo" parameterType="conditionVo">
+  SELECT *
+  FROM
+    (SELECT ROWNUM rn, a.*
+    FROM 
+        (SELECT * 
+         FROM users
+         WHERE alias LIKE #{contents}
+         ORDER BY userid) a
+     WHERE ROWNUM &lt;= #{page} * #{pageSize})
+WHERE rn BETWEEN (#{page}-1) * #{pageSize} + 1 AND #{page} * #{pageSize}
+  </select>
+  
+    <select id="getConditionMemberbynm" resultType="memberVo" parameterType="conditionVo">
+  SELECT *
+  FROM
+    (SELECT ROWNUM rn, a.*
+    FROM 
+        (SELECT * 
+         FROM users
+         WHERE usernm LIKE #{contents}
+         ORDER BY userid) a
+     WHERE ROWNUM &lt;= #{page} * #{pageSize})
+WHERE rn BETWEEN (#{page}-1) * #{pageSize} + 1 AND #{page} * #{pageSize}
+  </select>
+  
+  <select id="getCntMemberbyid" resultType="int" parameterType="conditionVo">
+  SELECT COUNT(*)
+  FROM users
+  WHERE userid LIKE #{userid}
+
+  </select>
+  
+  <select id="getCntMemberbyali" resultType="int" parameterType="conditionVo">
+  SELECT COUNT(*)
+  FROM users
+  WHERE alias LIKE #{alias}
+  </select>
+  
+  <select id="getCntMemberbynm" resultType="int" parameterType="conditionVo">
+  SELECT COUNT(*)
+  FROM users
+  WHERE usernm LIKE #{usernm}
+  </select>
 
 </mapper>

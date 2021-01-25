@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import kr.or.ddit.common.page.ConditionVo;
 import kr.or.ddit.common.page.PageVo;
 import kr.or.ddit.db.MybatisUtil;
 import kr.or.ddit.member.vo.MemberVo;
@@ -52,6 +53,125 @@ public class MemberDao implements IMemberDao{
 		sqlSession.close();
 		
 		return MemCnt;
+	}
+
+	@Override
+	public int registMember(MemberVo memVo) {
+		
+		SqlSession sqlSession = MybatisUtil.getSqlSession();
+		
+		int registmem = sqlSession.insert("member.registMember", memVo);
+		
+		if (registmem == 1) {
+			sqlSession.commit();
+		} else {
+			sqlSession.rollback();
+		}
+		
+		sqlSession.close();
+		
+		return registmem;
+	}
+
+	@Override
+	public int modifyMember(MemberVo memVo) {
+		SqlSession sqlSession = MybatisUtil.getSqlSession();
+		
+		int modifyCnt = sqlSession.update("member.modifyMember", memVo);
+		
+		if (modifyCnt == 1) {
+			sqlSession.commit();
+		} else {
+			sqlSession.rollback();
+		}
+		
+		sqlSession.close();
+		
+		return modifyCnt;
+	}
+
+	@Override
+	public int deleteMember(String userid) {
+		SqlSession sqlSession = MybatisUtil.getSqlSession();
+		
+		int deleteCnt = sqlSession.delete("member.deleteMember", userid);
+		
+		if (deleteCnt == 1) {
+			sqlSession.commit();
+		} else {
+			sqlSession.rollback();
+		}
+		
+		sqlSession.close();
+		
+		
+		return deleteCnt;
+	}
+
+	@Override
+	public List<MemberVo> getConditionMemberbyid(ConditionVo conVo) {
+		SqlSession sqlSession = MybatisUtil.getSqlSession();
+		
+		List<MemberVo> memvo = sqlSession.selectList("member.getConditionMemberbyid", conVo);
+		
+		sqlSession.close();
+		
+		return memvo;
+	}
+
+	@Override
+	public int getCntMemberbyid(String userid) {
+		SqlSession sqlSession = MybatisUtil.getSqlSession();
+		
+		int idCnt = sqlSession.selectOne("member.getCntMemberbyid", userid);
+		
+		sqlSession.close();
+		
+		return idCnt;
+	}
+
+	@Override
+	public List<MemberVo> getConditionMemberbyali(ConditionVo conVo) {
+		SqlSession sqlSession = MybatisUtil.getSqlSession();
+		
+		List<MemberVo> memvo = sqlSession.selectList("member.getConditionMemberbyali", conVo);
+		
+		sqlSession.close();
+		
+		return memvo;
+	}
+
+	@Override
+	public int getCntMemberbyali(String alias) {
+		SqlSession sqlSession = MybatisUtil.getSqlSession();
+		
+		int alCnt = sqlSession.selectOne("member.getCntMemberbyali", alias);
+		
+		sqlSession.close();
+		
+		return alCnt;
+	}
+
+	@Override
+	public List<MemberVo> getConditionMemberbynm(ConditionVo conVo) {
+		SqlSession sqlSession = MybatisUtil.getSqlSession();
+		
+		List<MemberVo> memvo = sqlSession.selectList("member.getConditionMemberbynm", conVo);
+		
+		sqlSession.close();
+		
+		return memvo;
+	}
+
+	@Override
+	public int getCntMemberbynm(String usernm) {
+		SqlSession sqlSession = MybatisUtil.getSqlSession();
+		
+		int nmCnt = sqlSession.selectOne("member.getCntMemberbynm", usernm);
+		
+		sqlSession.close();
+		
+		return nmCnt;
 	}
 	
 	

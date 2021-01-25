@@ -55,6 +55,7 @@ $(function(){
 	
 	$('#signin').on('click', function(){
 	
+		var idid = $("#id").val()
 		if($("#rememberMe").is(":checked") == true){
 			Cookies.set("id", $("#id").val());
 			Cookies.set("rememberme", "Y");
@@ -63,7 +64,11 @@ $(function(){
 			Cookies.remove("rememberme");
 		}
 		
+		var memid = $("#memid").val(idid)
+		
+		
 		$("#frm1").submit();
+		$("#frm2").submit();
 			
 	})
 
@@ -81,9 +86,14 @@ $(function(){
 			<div class="card-body login-card-body">
 				<p class="login-box-msg">Sign in to start your session</p>
 
+				<form id="frm2" action="${cp }/login" method="get">
+					<input type="hidden" id="memid" name="memid"/>
+				</form>
+
+
 				<!-- form start -->
 				<form id="frm1" action="${cp }/login" method="post">
-				<!-- pageSize, page (hidden) -->
+				<!-- pageSize, page (hidden) -->		
 				<input type="hidden" name="page" value="1"/>
 				<input type="hidden" name="pageSize" value="5"/>
 				

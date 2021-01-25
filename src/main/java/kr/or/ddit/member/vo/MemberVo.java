@@ -17,12 +17,11 @@ public class MemberVo {
 	
 	public MemberVo() {}
 	
-	public MemberVo(String userid, String usernm, String pass, Date reg_dt, String alias, String addr1, String addr2,
+	public MemberVo(String userid, String usernm, String pass, String alias, String addr1, String addr2,
 			String zipcode, String filename, String realfilename) {
 		this.userid = userid;
 		this.usernm = usernm;
 		this.pass = pass;
-		this.reg_dt = reg_dt;
 		this.alias = alias;
 		this.addr1 = addr1;
 		this.addr2 = addr2;
